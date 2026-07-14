@@ -1,26 +1,123 @@
 @import "tailwindcss";
 
+/* ============================================================
+   CliqWorx Design Tokens — Brand Guardian v1.0 (canonical)
+   Single source of truth. Every component reads these values;
+   never hardcode a hex, radius, or spacing figure elsewhere.
+   ============================================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colour */
+  --cliq-black: #111111;
+  --cliq-white: #ffffff;
+  --cliq-purple: #6a35ff;
+  --cliq-violet: #8e5bff;
+  --cliq-charcoal: #1f1f1f;
+  --cliq-slate: #595959;
+  --cliq-silver: #b7b7b7;
+  --cliq-light-grey: #efefef;
+  --cliq-gradient: linear-gradient(90deg, #6a35ff 0%, #8e5bff 100%);
+  /* AA-safe purple for small text on white (body-size links, small labels) */
+  --cliq-purple-aa: #5a28e0;
+
+  /* Radii */
+  --radius-sm: 8px; /* inputs, chips */
+  --radius-md: 12px; /* buttons, cards */
+  --radius-lg: 20px; /* feature cards, media, panels */
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(17, 17, 17, 0.06);
+  --shadow-md: 0 8px 24px rgba(17, 17, 17, 0.08);
+  --shadow-accent: 0 12px 32px rgba(106, 53, 255, 0.24);
+
+  /* Motion */
+  --ease-brand: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 200ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+  --duration-hero: 800ms;
+
+  /* Focus ring */
+  --focus-ring: 0 0 0 3px rgba(106, 53, 255, 0.35);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cliq-black: var(--cliq-black);
+  --color-cliq-white: var(--cliq-white);
+  --color-cliq-purple: var(--cliq-purple);
+  --color-cliq-violet: var(--cliq-violet);
+  --color-cliq-charcoal: var(--cliq-charcoal);
+  --color-cliq-slate: var(--cliq-slate);
+  --color-cliq-silver: var(--cliq-silver);
+  --color-cliq-light-grey: var(--cliq-light-grey);
+  --color-cliq-purple-aa: var(--cliq-purple-aa);
+
+  --background-image-cliq-gradient: var(--cliq-gradient);
+
+  --font-display: var(--font-manrope);
+  --font-body: var(--font-inter);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-pill: var(--radius-pill);
+
+  --shadow-cliq-sm: var(--shadow-sm);
+  --shadow-cliq-md: var(--shadow-md);
+  --shadow-cliq-accent: var(--shadow-accent);
+
+  --ease-brand: var(--ease-brand);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+* {
+  border-color: var(--cliq-light-grey);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cliq-white);
+  color: var(--cliq-black);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  /* Heavier baseline so body copy reads with more presence. Elements with an
+     explicit font-weight utility (medium/semibold/bold) keep their own weight;
+     unstyled body text inherits this. */
+  font-weight: 500;
+}
+
+::selection {
+  background: rgba(106, 53, 255, 0.18);
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* Overline / eyebrow — used for the STRATEGY. TECHNOLOGY. GROWTH. tagline
+   and every section eyebrow. Inter SemiBold, 0.16em tracking, per Brand
+   Guardian (not the 0.22em used elsewhere in a conflicting reference). */
+.overline {
+  font-family: var(--font-body), ui-sans-serif, sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
