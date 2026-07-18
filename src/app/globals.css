@@ -119,6 +119,58 @@ body {
   border-radius: var(--radius-sm);
 }
 
+/* Footer nav link: colour transition, animated underline, slight shift. */
+.flink {
+  position: relative;
+  display: inline-block;
+  transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1), transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.flink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background: #9b5fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.flink:hover,
+.flink:focus-visible {
+  color: #c4a0ff;
+  transform: translateX(3px);
+}
+.flink:hover::after,
+.flink:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Premium CTA button: soft elevation + gradient movement on hover. */
+.cta-elevate {
+  background: linear-gradient(120deg, #7b2fff 0%, #9b5fff 50%, #7b2fff 100%);
+  background-size: 200% 100%;
+  background-position: 0% 0;
+  transition:
+    background-position 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cta-elevate:hover,
+.cta-elevate:focus-visible {
+  background-position: 100% 0;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(123, 47, 255, 0.35);
+}
+@media (prefers-reduced-motion: reduce) {
+  .flink,
+  .flink::after,
+  .cta-elevate {
+    transition: none;
+  }
+}
+
 /* Overline / eyebrow — used for the STRATEGY. TECHNOLOGY. GROWTH. tagline
    and every section eyebrow. Inter SemiBold, 0.16em tracking, per Brand
    Guardian (not the 0.22em used elsewhere in a conflicting reference). */
