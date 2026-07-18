@@ -39,6 +39,22 @@
 
   /* Focus ring */
   --focus-ring: 0 0 0 3px rgba(106, 53, 255, 0.35);
+
+  /* ---- Figma design tokens (approved final design) ---- */
+  --cw-purple: #7b2fff;
+  --cw-purple-mid: #9b5fff;
+  --cw-purple-light: #c4a0ff;
+  --cw-purple-dark: #5b1fdf;
+  --cw-purple-glow: rgba(123, 47, 255, 0.35);
+  --cw-black: #08080e;
+  --cw-dark: #0d0d1a;
+  --cw-card: #12121f;
+  --cw-card-border: rgba(123, 47, 255, 0.18);
+  --cw-muted: #1e1e32;
+  --cw-muted-text: #8888aa;
+  --cw-light-bg: #f5f5fa;
+  --cw-light-card: #ffffff;
+  --cw-text-light: #1a1a2e;
 }
 
 @theme inline {
@@ -73,14 +89,9 @@
   border-color: var(--cliq-light-grey);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* No CSS smooth scroll: Lenis owns scrolling. */
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   *,
   *::before,
   *::after {
@@ -92,13 +103,10 @@ html {
 }
 
 body {
-  background: var(--cliq-white);
-  color: var(--cliq-black);
-  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
-  /* Heavier baseline so body copy reads with more presence. Elements with an
-     explicit font-weight utility (medium/semibold/bold) keep their own weight;
-     unstyled body text inherits this. */
-  font-weight: 500;
+  background: var(--cw-black);
+  color: #ffffff;
+  /* The approved design sets Manrope for all type. */
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
 }
 
 ::selection {

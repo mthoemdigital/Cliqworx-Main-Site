@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Manrope, Inter } from "next/font/google";
 import Script from "next/script";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { Nav } from "@/components/site/Nav";
+import { Footer } from "@/components/site/Footer";
+import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import "./globals.css";
 
 const GA_ID = "G-YF05MJFQY3";
@@ -82,9 +83,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${manrope.variable} ${inter.variable}`}>
       <body className="min-h-screen antialiased" suppressHydrationWarning>
-        <Header />
-        {children}
-        <Footer />
+        <SmoothScroll>
+          <Nav />
+          {children}
+          <Footer />
+        </SmoothScroll>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
