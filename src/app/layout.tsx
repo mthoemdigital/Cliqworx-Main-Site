@@ -56,6 +56,14 @@ export const metadata: Metadata = {
     description:
       "CliqWorx is an AI-first digital consultancy helping ambitious businesses transform, build and grow.",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
+  },
   robots: {
     index: true,
     follow: true,
