@@ -247,7 +247,10 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.06] text-white mb-6"
             >
-              Digital work that{" "}
+              More leads.
+              <br />
+              Sustainable growth.
+              <br />
               <span
                 className="relative"
                 style={{
@@ -256,7 +259,7 @@ export function Hero() {
                   WebkitTextFillColor: "transparent",
                 }}
               >
-                compounds.
+                Measurable revenue.
               </span>
             </motion.h1>
 
@@ -267,8 +270,8 @@ export function Hero() {
               className="text-lg leading-relaxed mb-8 max-w-xl"
               style={{ color: "#8888AA" }}
             >
-              We embed strategy, technology, and growth into a single operating system for ambitious
-              businesses. One team. One system. Measurable outcomes.
+              We combine business strategy, technology and performance marketing to help ambitious
+              businesses attract more customers, convert more opportunities and grow with confidence.
             </motion.p>
 
             <motion.div
@@ -293,6 +296,17 @@ export function Hero() {
                 See Our Work
               </a>
             </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="text-sm leading-relaxed mt-4 max-w-xl"
+              style={{ color: "#8888AA" }}
+            >
+              20-minute strategy consultation. We&apos;ll identify practical opportunities to
+              generate more leads, accelerate growth and increase revenue.
+            </motion.p>
 
             {/* Stats */}
             <motion.div
@@ -320,7 +334,7 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Right — 3D Slab Visual */}
+          {/* Right: 3D Slab Visual */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
