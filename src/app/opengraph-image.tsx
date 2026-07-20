@@ -1,8 +1,15 @@
 import { ImageResponse } from "next/og";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 export const alt = "CliqWorx: Strategy. Technology. Growth.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+
+// Embed the real brand mark so shared links show the CliqWorx logo.
+const markData = `data:image/png;base64,${readFileSync(
+  join(process.cwd(), "public", "logo-cliqworx-mark.png")
+).toString("base64")}`;
 
 export default function Image() {
   return new ImageResponse(
@@ -15,41 +22,51 @@ export default function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "#111111",
+          background: "#0A0A0F",
           position: "relative",
         }}
       >
         <div
           style={{
             position: "absolute",
-            top: -140,
-            right: -140,
-            width: 560,
-            height: 560,
+            top: -160,
+            right: -160,
+            width: 620,
+            height: 620,
             borderRadius: "50%",
-            border: "16px solid",
-            borderColor: "#6A35FF",
-            opacity: 0.35,
+            border: "18px solid",
+            borderColor: "#7B2FFF",
+            opacity: 0.28,
           }}
+        />
+        {/* Brand mark on a white tile */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={markData}
+          width={180}
+          height={180}
+          alt=""
+          style={{ borderRadius: 40, boxShadow: "0 24px 60px rgba(123,47,255,0.35)" }}
         />
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 20,
-            fontSize: 88,
+            gap: 18,
+            marginTop: 44,
+            fontSize: 92,
             fontWeight: 800,
             color: "#FFFFFF",
             letterSpacing: -2,
           }}
         >
           Cliq
-          <span style={{ color: "#8E5BFF" }}>Worx</span>
+          <span style={{ color: "#9B5FFF" }}>Worx</span>
         </div>
         <div
           style={{
             display: "flex",
-            marginTop: 28,
+            marginTop: 24,
             fontSize: 28,
             fontWeight: 600,
             letterSpacing: 8,
