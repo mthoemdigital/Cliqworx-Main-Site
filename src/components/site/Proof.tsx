@@ -201,7 +201,7 @@ export function Proof() {
                       ))}
                     </div>
                     <a
-                      href="/#contact"
+                      href="/contact"
                       className="inline-flex items-center gap-2 text-sm font-bold mt-6 transition-colors hover:opacity-80"
                       style={{ color: "#7B2FFF" }}
                     >

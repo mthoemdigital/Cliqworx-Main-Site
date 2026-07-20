@@ -8,21 +8,25 @@ import { Logo } from "./Logo";
 const columns = [
   {
     heading: "Strategy",
+    href: "/contact",
     links: ["Digital Strategy", "Transformation", "AI Readiness", "Process Optimisation"],
   },
   {
     heading: "Build",
+    href: "/contact",
     links: ["Web Applications", "Website Design", "AI Solutions", "CRM Integrations"],
   },
   {
     heading: "Growth",
+    href: "/performance-marketing",
     links: ["Performance Marketing", "Lead Generation", "Marketing Automation", "Analytics"],
   },
 ];
 
 const bottomLinks = [
+  { label: "Performance Marketing", href: "/performance-marketing" },
   { label: "Case Studies", href: "/#proof" },
-  { label: "Contact", href: "/consultation" },
+  { label: "Contact", href: "/contact" },
   { label: "Privacy Policy", href: "#" },
   { label: "Terms", href: "#" },
   { label: "LinkedIn", href: "#" },
@@ -31,34 +35,6 @@ const bottomLinks = [
 export function Footer() {
   return (
     <footer style={{ background: "#0A0A0F" }}>
-      {/* Conversion CTA band above the footer */}
-      <div
-        className="relative overflow-hidden"
-        style={{ borderTop: "1px solid rgba(123,47,255,0.12)" }}
-      >
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 80% at 50% 0%, rgba(123,47,255,0.1) 0%, transparent 70%)",
-          }}
-        />
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 py-20 text-center relative z-10">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-            Ready to transform your business?
-          </h2>
-          <p className="text-base max-w-md mx-auto mb-8" style={{ color: "#8F8FAD" }}>
-            Book a free strategy session and discover your biggest opportunities for growth.
-          </p>
-          <a
-            href="/#contact"
-            className="cta-elevate inline-block px-7 py-3.5 rounded-lg text-sm font-bold text-white"
-          >
-            Book My Strategy Session
-          </a>
-        </div>
-      </div>
-
       {/* Main footer */}
       <div
         className="max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-14"
@@ -80,7 +56,7 @@ export function Footer() {
               growth.
             </p>
             <a
-              href="/#contact"
+              href="/contact"
               className="cta-elevate inline-block mt-6 px-5 py-2.5 rounded-lg text-sm font-bold text-white"
             >
               Book a Free Strategy Session
@@ -104,7 +80,7 @@ export function Footer() {
               <ul className="space-y-4">
                 {col.links.map((link) => (
                   <li key={link}>
-                    <a href="/#contact" className="flink text-sm" style={{ color: "#B0B0C8" }}>
+                    <a href={col.href} className="flink text-sm" style={{ color: "#B0B0C8" }}>
                       {link}
                     </a>
                   </li>

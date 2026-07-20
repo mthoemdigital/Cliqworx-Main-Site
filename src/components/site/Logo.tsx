@@ -6,7 +6,14 @@ import Image from "next/image";
  * dark surfaces we invert and hue-rotate: the mark and "Cliq" read white while
  * the purple "Worx" stays in the purple family.
  */
-export function Logo({ className = "h-9" }: { className?: string }) {
+export function Logo({
+  className = "h-9",
+  invert = true,
+}: {
+  className?: string;
+  /** true (default): invert for dark surfaces. false: original dark mark for light surfaces. */
+  invert?: boolean;
+}) {
   return (
     <Image
       src="/logo/logo-nav.png"
@@ -15,7 +22,10 @@ export function Logo({ className = "h-9" }: { className?: string }) {
       height={264}
       priority
       className={`w-auto ${className}`}
-      style={{ filter: "invert(1) hue-rotate(180deg) saturate(1.4)" }}
+      style={{
+        filter: invert ? "invert(1) hue-rotate(180deg) saturate(1.4)" : "none",
+        transition: "filter 300ms ease",
+      }}
     />
   );
 }

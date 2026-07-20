@@ -281,7 +281,7 @@ export function Hero() {
               className="flex flex-wrap gap-3"
             >
               <a
-                href="/#contact"
+                href="/contact"
                 className="flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-white transition-all duration-200 hover:opacity-90 hover:scale-[1.02]"
                 style={{ background: "#7B2FFF" }}
               >

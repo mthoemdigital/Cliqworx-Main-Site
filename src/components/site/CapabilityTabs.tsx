@@ -137,7 +137,7 @@ export function CapabilityTabs() {
                 </p>
               </div>
               <a
-                href="/#contact"
+                href="/contact"
                 className="flex items-center gap-2 text-sm font-bold transition-colors"
                 style={{ color: "#7B2FFF" }}
               >

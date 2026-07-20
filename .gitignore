@@ -44,3 +44,6 @@ next-env.d.ts
 # Internal working assets, not for the public repo
 /design_reference/
 /brand_kit/
+
+# Internal design reference images (kept out of the public repo)
+/perfomance marketing landing page assets/

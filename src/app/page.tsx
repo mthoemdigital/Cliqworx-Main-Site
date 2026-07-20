@@ -4,7 +4,6 @@ import { CapabilityTabs } from "@/components/site/CapabilityTabs";
 import { OperatingModel } from "@/components/site/OperatingModel";
 import { Proof } from "@/components/site/Proof";
 import { FAQ } from "@/components/site/FAQ";
-import { CTASection } from "@/components/site/CTASection";
 
 export default function Home() {
   return (
@@ -15,7 +14,6 @@ export default function Home() {
       <OperatingModel />
       <Proof />
       <FAQ />
-      <CTASection />
     </main>
   );
 }

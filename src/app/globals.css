@@ -171,6 +171,30 @@ body {
   }
 }
 
+/* Performance-marketing platform strip: seamless infinite marquee.
+   Track holds two copies of the logo set; translating by -50% loops
+   with no visible jump. Pauses on hover; disabled under reduced motion. */
+.pm-marquee-track {
+  animation: pm-marquee 42s linear infinite;
+  width: max-content;
+}
+.pm-marquee:hover .pm-marquee-track {
+  animation-play-state: paused;
+}
+@keyframes pm-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pm-marquee-track {
+    animation: none;
+  }
+}
+
 /* Overline / eyebrow — used for the STRATEGY. TECHNOLOGY. GROWTH. tagline
    and every section eyebrow. Inter SemiBold, 0.16em tracking, per Brand
    Guardian (not the 0.22em used elsewhere in a conflicting reference). */
