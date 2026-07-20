@@ -137,16 +137,14 @@ export function Proof() {
           <h2 className="text-3xl lg:text-4xl font-bold leading-snug" style={{ color: "#1A1A2E" }}>
             Businesses don&apos;t hire us
             <br />
-            for websites.
+            to do the work.
             <span className="block" style={{ color: "#555577" }}>
-              They hire us for what
-              <br />
-              those websites achieve.
+              They hire us to grow the business.
             </span>
           </h2>
           <p className="mt-5 text-base max-w-xl" style={{ color: "#555577" }}>
-            More leads. Better conversion rates. Lower acquisition costs. Sustainable growth. These
-            are the outcomes that define success.
+            Every engagement is measured by what matters most: qualified leads, stronger conversion
+            rates, sustainable growth and measurable revenue.
           </p>
         </motion.div>
 

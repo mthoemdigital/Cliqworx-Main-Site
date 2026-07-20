@@ -245,7 +245,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.06] text-white mb-6"
+              className="text-4xl sm:text-5xl xl:text-[3.5rem] font-bold leading-[1.1] text-white mb-6"
             >
               More leads.
               <br />
