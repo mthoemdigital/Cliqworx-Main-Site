@@ -1,5 +1,5 @@
-import { Resend } from "resend";
 import { z } from "zod";
+import { addHubSpotNote, splitName, upsertHubSpotContact } from "@/lib/hubspot";
 
 export const dynamic = "force-dynamic";
 
@@ -44,10 +44,6 @@ export async function POST(request: Request) {
   if (data.website) return Response.json({ ok: true });
 
   const practice = FOCUS_TO_PRACTICE[data.focus] ?? "Unmapped";
-  const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONSULTATION_TO_EMAIL || "hello@cliqworx.com";
-  const fromEmail =
-    process.env.CONSULTATION_FROM_EMAIL || "Cliqworx Website <onboarding@resend.dev>";
 
   const summary = {
     name: data.name,
@@ -59,47 +55,40 @@ export async function POST(request: Request) {
     at: new Date().toISOString(),
   };
 
-  if (!apiKey) {
-    // Email delivery is not configured. Never surface that to the visitor:
+  if (!process.env.HUBSPOT_ACCESS_TOKEN) {
+    // CRM delivery is not configured. Never surface that to the visitor:
     // record the lead in server logs so it is recoverable, and respond ok.
-    console.error("[lead] RESEND_API_KEY missing. Lead captured in logs:", JSON.stringify(summary));
+    console.error("[lead] HUBSPOT_ACCESS_TOKEN missing. Lead captured in logs:", JSON.stringify(summary));
     return Response.json({ ok: true });
   }
 
-  const resend = new Resend(apiKey);
   try {
-    const result = await resend.emails.send({
-      from: fromEmail,
-      to: toEmail,
-      replyTo: data.email,
-      subject: `Strategy session request: ${data.name} (${practice})`,
-      html: `
-        <h2>New strategy session request</h2>
-        <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
-        <p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>
-        <p><strong>Focus:</strong> ${escapeHtml(data.focus)} (${escapeHtml(practice)})</p>
-        <p><strong>Biggest challenge:</strong></p>
-        <p>${escapeHtml(data.challenge || "(not provided)").replace(/\n/g, "<br>")}</p>
-        <p>Submitted from the homepage lead form.</p>
-      `,
+    const { firstname, lastname } = splitName(data.name);
+    const contact = await upsertHubSpotContact({
+      email: data.email,
+      firstname,
+      lastname,
+      phone: data.phone,
     });
-    if (result.error) {
-      console.error("[lead] Resend error. Lead captured in logs:", JSON.stringify(summary), result.error);
-      return Response.json({ ok: true });
+
+    if (contact) {
+      try {
+        await addHubSpotNote(
+          contact.id,
+          `Strategy session request from the Cliqworx website.\n\n` +
+            `Focus: ${data.focus} (${practice})\n` +
+            `Biggest challenge: ${data.challenge || "(not provided)"}`
+        );
+      } catch (noteErr) {
+        // The contact (and their email) is already captured; a failed note
+        // is a loss of context, not a lost lead. Log and continue.
+        console.error("[lead] Contact created but note failed:", noteErr);
+      }
     }
+
     return Response.json({ ok: true });
   } catch (err) {
-    console.error("[lead] Send failed. Lead captured in logs:", JSON.stringify(summary), err);
+    console.error("[lead] HubSpot delivery failed. Lead captured in logs:", JSON.stringify(summary), err);
     return Response.json({ ok: true });
   }
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
 }

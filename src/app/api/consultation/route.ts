@@ -1,5 +1,5 @@
-import { Resend } from "resend";
 import { consultationSchema, HELP_OPTIONS, COMPANY_SIZE_OPTIONS } from "@/lib/validation";
+import { addHubSpotNote, splitName, upsertHubSpotContact } from "@/lib/hubspot";
 
 export const dynamic = "force-dynamic";
 
@@ -31,71 +31,49 @@ export async function POST(request: Request) {
     return Response.json({ ok: true });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONSULTATION_TO_EMAIL || "hello@cliqworx.com";
-  const fromEmail = process.env.CONSULTATION_FROM_EMAIL || "CliqWorx Website <onboarding@resend.dev>";
-
-  if (!apiKey) {
-    console.error(
-      "[consultation] RESEND_API_KEY is not set. See project README for setup steps."
-    );
+  if (!process.env.HUBSPOT_ACCESS_TOKEN) {
+    console.error("[consultation] HUBSPOT_ACCESS_TOKEN is not set. See project README for setup steps.");
     return Response.json(
       { error: "The booking service isn't configured yet. Please email hello@cliqworx.com directly." },
       { status: 500 }
     );
   }
 
-  const resend = new Resend(apiKey);
-
   const helpWithLabel = label(HELP_OPTIONS, data.helpWith);
   const companySizeLabel = data.companySize ? label(COMPANY_SIZE_OPTIONS, data.companySize) : "Not specified";
+  const { firstname, lastname } = splitName(data.name);
 
-  const html = `
-    <h2>New consultation request</h2>
-    <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
-    <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
-    <p><strong>Company:</strong> ${escapeHtml(data.company)}</p>
-    <p><strong>Company size:</strong> ${escapeHtml(companySizeLabel)}</p>
-    <p><strong>Needs help with:</strong> ${escapeHtml(helpWithLabel)}</p>
-    <p><strong>Preferred contact:</strong> ${escapeHtml(data.contactMethod)}${
-    data.contactMethod === "call" && data.phone ? ` (${escapeHtml(data.phone)})` : ""
-  }</p>
-    <p><strong>Situation:</strong></p>
-    <p>${escapeHtml(data.situation).replace(/\n/g, "<br>")}</p>
-  `;
+  const noteBody =
+    `New consultation request from the Cliqworx website.\n\n` +
+    `Company size: ${companySizeLabel}\n` +
+    `Needs help with: ${helpWithLabel}\n` +
+    `Preferred contact: ${data.contactMethod}` +
+    `${data.contactMethod === "call" && data.phone ? ` (${data.phone})` : ""}\n\n` +
+    `Situation:\n${data.situation}`;
 
   try {
-    const result = await resend.emails.send({
-      from: fromEmail,
-      to: toEmail,
-      replyTo: data.email,
-      subject: `New consultation request from ${data.name} (${data.company})`,
-      html,
+    const contact = await upsertHubSpotContact({
+      email: data.email,
+      firstname,
+      lastname,
+      company: data.company,
+      phone: data.contactMethod === "call" ? data.phone : undefined,
     });
 
-    if (result.error) {
-      console.error("[consultation] Resend API error:", result.error);
-      return Response.json(
-        { error: "We couldn't send your request right now. Please try again or email hello@cliqworx.com." },
-        { status: 502 }
-      );
+    if (contact) {
+      try {
+        await addHubSpotNote(contact.id, noteBody);
+      } catch (noteErr) {
+        console.error("[consultation] Contact created but note failed:", noteErr);
+      }
     }
 
     return Response.json({ ok: true });
   } catch (err) {
-    console.error("[consultation] Unexpected error sending email:", err);
+    console.error("[consultation] HubSpot delivery failed:", err);
     return Response.json(
       { error: "We couldn't send your request right now. Please try again or email hello@cliqworx.com." },
-      { status: 500 }
+      { status: 502 }
     );
   }
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
 }
