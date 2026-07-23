@@ -176,6 +176,7 @@ export function ConsultationForm() {
           </label>
           <input
             id={`${idPrefix}-name`}
+            name="name"
             type="text"
             autoComplete="name"
             value={values.name}
@@ -194,6 +195,7 @@ export function ConsultationForm() {
           </label>
           <input
             id={`${idPrefix}-email`}
+            name="email"
             type="email"
             autoComplete="email"
             value={values.email}
@@ -214,6 +216,7 @@ export function ConsultationForm() {
           </label>
           <input
             id={`${idPrefix}-company`}
+            name="company"
             type="text"
             autoComplete="organization"
             value={values.company}
@@ -280,6 +283,7 @@ export function ConsultationForm() {
         </div>
         <textarea
           id={`${idPrefix}-situation`}
+          name="message"
           rows={4}
           maxLength={500}
           placeholder="What's working, what isn't, and what you're hoping changes."
@@ -323,6 +327,7 @@ export function ConsultationForm() {
           </label>
           <input
             id={`${idPrefix}-phone`}
+            name="phone"
             type="tel"
             autoComplete="tel"
             value={values.phone}

@@ -973,6 +973,7 @@ function Newsletter() {
           >
             <input
               type="email"
+              name="email"
               autoComplete="email"
               placeholder="you@company.com"
               value={email}

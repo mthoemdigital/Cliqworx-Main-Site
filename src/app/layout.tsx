@@ -114,6 +114,15 @@ gtag('config', '${GA_ID}');`}
     y.parentNode.insertBefore(t,y);
 })(window, document, "clarity", "script", "xp4kkg78j5");`}
         </Script>
+        {/* HubSpot (loads on every page; also enables Collected Forms tracking
+            on the native forms below, which submit fields via name attributes) */}
+        <Script
+          id="hs-script-loader"
+          src="//js-eu1.hs-scripts.com/148951607.js"
+          strategy="afterInteractive"
+          async
+          defer
+        />
       </body>
     </html>
   );

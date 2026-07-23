@@ -264,6 +264,7 @@ export function CTASection() {
                       </label>
                       <input
                         id="lead-name"
+                        name="name"
                         type="text"
                         autoComplete="name"
                         placeholder="e.g. Tendai Moyo"
@@ -294,6 +295,7 @@ export function CTASection() {
                       </label>
                       <input
                         id="lead-email"
+                        name="email"
                         type="email"
                         autoComplete="email"
                         placeholder="you@company.com"
@@ -324,6 +326,7 @@ export function CTASection() {
                       </label>
                       <input
                         id="lead-phone"
+                        name="phone"
                         type="tel"
                         autoComplete="tel"
                         placeholder="e.g. 082 123 4567"
@@ -354,6 +357,7 @@ export function CTASection() {
                       </label>
                       <textarea
                         id="lead-challenge"
+                        name="message"
                         rows={3}
                         maxLength={1000}
                         placeholder="e.g. We get traffic but very few enquiries"
