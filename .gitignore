@@ -47,3 +47,6 @@ next-env.d.ts
 
 # Internal design reference images (kept out of the public repo)
 /perfomance marketing landing page assets/
+
+# Internal source imagery (originals kept out of the public repo)
+/digital strategy assets/

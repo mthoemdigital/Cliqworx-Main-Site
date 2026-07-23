@@ -25,12 +25,13 @@ const REASSURANCE = [
   "No spam. Ever.",
 ];
 
-type Errors = { focus?: string; name?: string; email?: string };
+type Errors = { focus?: string; name?: string; email?: string; phone?: string };
 
 export function CTASection() {
   const [focus, setFocus] = useState<string>("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [challenge, setChallenge] = useState("");
   const [website, setWebsite] = useState(""); // honeypot
   const [errors, setErrors] = useState<Errors>({});
@@ -46,6 +47,7 @@ export function CTASection() {
     if (!focus) next.focus = "Choose the option closest to your goal.";
     if (name.trim().length < 2) next.name = "Please add your name.";
     if (!/.+@.+\..+/.test(email)) next.email = "Please use a valid email address.";
+    if (phone.replace(/[^\d]/g, "").length < 7) next.phone = "Please add a valid phone number.";
     setErrors(next);
     if (Object.keys(next).length > 0) {
       // Focus the first invalid control directly; the aria-invalid attribute
@@ -54,7 +56,9 @@ export function CTASection() {
         ? formRef.current?.querySelector<HTMLElement>("input[name='focus']")
         : next.name
           ? document.getElementById("lead-name")
-          : document.getElementById("lead-email");
+          : next.email
+            ? document.getElementById("lead-email")
+            : document.getElementById("lead-phone");
       target?.focus();
       return false;
     }
@@ -70,7 +74,7 @@ export function CTASection() {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, focus, challenge, website }),
+        body: JSON.stringify({ name, email, phone, focus, challenge, website }),
       });
       if (!res.ok) throw new Error("send failed");
       setSubmitted(true);
@@ -310,6 +314,36 @@ export function CTASection() {
                       {errors.email && (
                         <p id="lead-email-error" role="alert" className="text-xs mt-1.5" style={{ color: "#FF9AB4" }}>
                           {errors.email}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label htmlFor="lead-phone" className="block text-sm font-medium text-white mb-1.5">
+                        Phone Number
+                      </label>
+                      <input
+                        id="lead-phone"
+                        type="tel"
+                        autoComplete="tel"
+                        placeholder="e.g. 082 123 4567"
+                        value={phone}
+                        aria-invalid={!!errors.phone}
+                        aria-describedby={errors.phone ? "lead-phone-error" : undefined}
+                        onChange={(e) => {
+                          setPhone(e.target.value);
+                          setErrors((prev) => ({ ...prev, phone: undefined }));
+                        }}
+                        className={`${inputBase} placeholder-[#555577]`}
+                        style={inputStyle(!!errors.phone)}
+                        onFocus={(e) => (e.target.style.borderColor = "#7B2FFF")}
+                        onBlur={(e) =>
+                          (e.target.style.borderColor = errors.phone ? "#FF7A9A" : "rgba(123,47,255,0.15)")
+                        }
+                      />
+                      {errors.phone && (
+                        <p id="lead-phone-error" role="alert" className="text-xs mt-1.5" style={{ color: "#FF9AB4" }}>
+                          {errors.phone}
                         </p>
                       )}
                     </div>

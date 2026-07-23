@@ -9,7 +9,9 @@ import { Logo } from "./Logo";
 const navItems = [
   {
     label: "Strategy",
-    anchor: "/#strategy",
+    anchor: "/digital-strategy",
+    // Every Strategy service links through to the Digital Strategy page for now.
+    linkTo: "/digital-strategy",
     items: [
       "Digital Strategy",
       "Digital Transformation",

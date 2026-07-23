@@ -8,7 +8,8 @@ import { ArrowRight, ChevronDown, Cpu, Target, TrendingUp } from "lucide-react";
 const HeroField = dynamic(() => import("@/components/three/HeroField"), { ssr: false });
 
 // ─── Layered 3D Slab Visual ──────────────────────────────────────────────────
-function LayeredSlabs() {
+// Exported so service landing pages can reuse the exact homepage hero media.
+export function LayeredSlabs() {
   const slabs = [
     { label: "Strategy", color: "#7B2FFF", sub: "Direction. Diagnosis. Roadmap.", z: 80 },
     // Brief fix: middle pillar is "Build" (nav parity); sub-label kept as designed.

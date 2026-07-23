@@ -14,6 +14,7 @@ const FOCUS_TO_PRACTICE: Record<string, string> = {
 const leadSchema = z.object({
   name: z.string().trim().min(2, "Name is required"),
   email: z.string().trim().email("Valid email required"),
+  phone: z.string().trim().min(7, "Valid phone number required"),
   focus: z.enum([
     "I need more customers",
     "I need a better website",
@@ -51,6 +52,7 @@ export async function POST(request: Request) {
   const summary = {
     name: data.name,
     email: data.email,
+    phone: data.phone,
     focus: data.focus,
     practice,
     challenge: data.challenge || "(not provided)",
@@ -75,6 +77,7 @@ export async function POST(request: Request) {
         <h2>New strategy session request</h2>
         <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
+        <p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>
         <p><strong>Focus:</strong> ${escapeHtml(data.focus)} (${escapeHtml(practice)})</p>
         <p><strong>Biggest challenge:</strong></p>
         <p>${escapeHtml(data.challenge || "(not provided)").replace(/\n/g, "<br>")}</p>
